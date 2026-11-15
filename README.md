@@ -4,29 +4,39 @@ Prova de conceito (PoC) de um sistema de cardápio digital com gestão de pedido
 
 ## Sobre o projeto
 
-Muitos pequenos estabelecimentos ainda usam PDFs, imagens ou links de armazenamento em nuvem como cardápio, o que gera lentidão, informações desatualizadas e desorganização na hora de anotar pedidos. Este projeto valida o fluxo principal de uma solução mais simples: o cliente acessa o cardápio pelo celular, monta e envia o pedido, e o garçom recebe tudo organizado por mesa em um painel.
+Muitos pequenos estabelecimentos ainda utilizam PDFs, imagens ou links de armazenamento em nuvem como cardápio, o que pode gerar lentidão, informações desatualizadas e desorganização no momento dos pedidos.
+
+O projeto propõe uma solução em que o cliente poderá acessar o cardápio pelo celular, selecionar produtos, informar quantidades e observações e enviar o pedido de forma organizada.
 
 ## Escopo da PoC
 
-Incluído:
-- Cardápio digital responsivo, organizado por categorias
-- Carrinho com quantidade e observações
-- Envio do pedido identificado pela mesa
-- Tela de confirmação com número do pedido
-- Painel do garçom com os pedidos recebidos
+Nesta etapa, o projeto está sendo desenvolvido de forma incremental.
 
-Fora do escopo desta etapa (evolução futura):
-- Painel do proprietário para editar o cardápio
-- Login, pagamento e notificações
-- Histórico de pedidos e relatórios
+O backend já está em desenvolvimento e o frontend será trabalhado pela equipe em uma próxima etapa.
+
+Funcionalidades como mesas, status dos pedidos, usuários, login, autenticação e exclusão de registros serão implementadas posteriormente.
 
 ## Tecnologias
 
-- [a definir pelo grupo]
+### Backend
+- Python
+- FastAPI
+
+### Banco de dados
+- PostgreSQL
+
+### Frontend
+- HTML
+- CSS
+- JavaScript
+
+### Versionamento
+- Git
+- GitHub
 
 ## Como executar
 
-[Passo a passo a ser preenchido quando o projeto estiver funcionando]
+O passo a passo de execução será atualizado conforme a evolução do projeto.
 
 ## Integrantes
 
@@ -34,4 +44,4 @@ Fora do escopo desta etapa (evolução futura):
 - Thais Helena Bezerra Da Silva ([@usuario-github])
 - Marco Antonio Neves Souza ([@usuario-github])
 - Priscila Alexsandra De Oliveira Ferreira ([@usuario-github])
-- Camila Sayaka Hiura CAMILA SAYAKA HIURA ([@usuario-github])
+- Camila Sayaka Hiura ([@usuario-github])

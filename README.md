@@ -41,7 +41,7 @@ O passo a passo de execução será atualizado conforme a evolução do projeto.
 ## Integrantes
 
 - Bruna Rodrigueiro Dias (BrunaRodrigueiro)
-- Thais Helena Bezerra Da Silva ([@usuario-github])
-- Marco Antonio Neves Souza ([@usuario-github])
-- Priscila Alexsandra De Oliveira Ferreira ([@usuario-github])
-- Camila Sayaka Hiura ([@usuario-github])
+- Thais Helena Bezerra Da Silva (thaishbs)
+- Marco Antonio Neves Souza (marconevesz)
+- Priscila Alexsandra De Oliveira Ferreira (PRISCILA2025)
+- Camila Sayaka Hiura (camilasayaka)

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#b23a1e">
+  <title>Cardápio Digital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <h1>Cardápio Digital</h1>
+    <p>Escolha seus itens e envie o pedido</p>
+  </header>
+
+  <nav id="categorias" class="categorias" aria-label="Categorias"></nav>
+
+  <main>
+    <div id="aviso" class="aviso" hidden></div>
+    <div id="lista" class="lista" aria-live="polite">
+      <p class="carregando">Carregando cardápio...</p>
+    </div>
+  </main>
+
+  <!-- Barra fixa do carrinho -->
+  <button id="btn-carrinho" class="barra-carrinho" hidden>
+    <span><b id="qtd-total">0</b> item(ns)</span>
+    <span>Ver pedido</span>
+    <span id="valor-total">R$ 0,00</span>
+  </button>
+
+  <!-- Painel do pedido -->
+  <div id="painel" class="painel" hidden>
+    <div class="painel-fundo" data-fechar></div>
+    <section class="painel-conteudo" role="dialog" aria-modal="true" aria-label="Seu pedido">
+      <div class="painel-topo">
+        <h2>Seu pedido</h2>
+        <button class="icone" data-fechar aria-label="Fechar">✕</button>
+      </div>
+
+      <ul id="itens-carrinho" class="itens-carrinho"></ul>
+
+      <label class="campo">
+        Seu nome (opcional)
+        <input id="cliente" type="text" maxlength="60" placeholder="Ex.: Maria">
+      </label>
+      <label class="campo">
+        Observação geral
+        <textarea id="obs-geral" rows="2" maxlength="200" placeholder="Ex.: sem pressa, trazer talheres..."></textarea>
+      </label>
+
+      <div class="total-linha">
+        <span>Total</span>
+        <strong id="valor-total-painel">R$ 0,00</strong>
+      </div>
+
+      <button id="btn-enviar" class="btn-primario">Enviar pedido</button>
+      <button id="btn-limpar" class="btn-link">Limpar pedido</button>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

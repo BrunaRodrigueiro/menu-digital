@@ -3,8 +3,8 @@
 from fastapi import APIRouter, status, HTTPException
 from fastapi.encoders import jsonable_encoder
 
-from models.models import Order, OrderItem
-from schemas.schemas import OrderItemModel
+from models.models import Order, OrderItem, Product
+from schemas.schemas import OrderItemModel, OrderCreate
 from db.database import SessionLocal
 
 
@@ -45,17 +45,42 @@ async def list_order_by_id(order_id: int):
 
 # Cria uma nova comanda/pedido e retorna o ID gerado
 @orders_router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_order():
+async def create_order(order_data: OrderCreate):
     session = SessionLocal()
 
     new_order = Order()
 
     session.add(new_order)
+    session.flush()
+
+    for item in order_data.items:
+        product = session.query(Product).filter(
+            Product.id == item.product_id
+        ).first()
+
+        if not product:
+            session.rollback()
+            raise HTTPException(
+                status_code=404,
+                detail=f"Produto {item.product_id} não encontrado"
+            )
+
+        new_item = OrderItem(
+            order_id=new_order.id,
+            product_id=item.product_id,
+            quantity=item.quantity,
+            unit_price=product.price,
+            notes=item.notes
+        )
+
+        session.add(new_item)
+
     session.commit()
     session.refresh(new_order)
 
     return {
-        "id": new_order.id
+        "id": new_order.id,
+        "items": new_order.items
     }
     
 # Adiciona um produto a uma comanda/pedido já existente
@@ -87,3 +112,26 @@ async def add_item_to_order(order: OrderItemModel):
     }
 
     return jsonable_encoder(response)
+
+@orders_router.delete("/{order_id}")
+async def delete_order(order_id: int):
+    session = SessionLocal()
+
+    order = session.query(Order).filter(
+        Order.id == order_id
+    ).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=404,
+            detail="Pedido não encontrado"
+        )
+
+    session.query(OrderItem).filter(
+        OrderItem.order_id == order_id
+    ).delete()
+
+    session.delete(order)
+    session.commit()
+
+    return {"message": "Pedido apagado com sucesso!"}

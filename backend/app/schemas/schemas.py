@@ -3,22 +3,31 @@ from typing import Optional
 from decimal import Decimal
 from pydantic import ConfigDict
 
-#Schemas Order
-class OrderModel(BaseModel):
-    id: int
-    items: list[OrderItemModel] = []
+# Schema para CRIAR item
+class OrderItemCreate(BaseModel):
+    product_id: int
+    quantity: int
+    notes: Optional[str] = None
 
-#Schemas OrderItem
+# Schema para CRIAR pedido
+class OrderCreate(BaseModel):
+    items: list[OrderItemCreate]
+
+# Schema OrderItem
 class OrderItemModel(BaseModel):
     id: int
     order_id: int
     product_id: int
     quantity: int
     unit_price: Decimal
-    notes: Optional[str]
+    notes: Optional[str] = None
 
-    class Config:
-        model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)
+
+# Schema Order
+class OrderModel(BaseModel):
+    id: int
+    items: list[OrderItemModel] = []
 
 # Schemas de Categoria
 class CategoryCreate(BaseModel):
@@ -34,6 +43,7 @@ class ProductCreate(BaseModel):
     description: Optional[str] = None
     price: Decimal
     image_url: Optional[str] = None
+    category_id: int
 
 class ProductResponse(ProductCreate):
     id: int

@@ -1,0 +1,267 @@
+:root {
+  --cor: #b23a1e;
+  --cor-escura: #8c2c15;
+  --fundo: #faf6f1;
+  --card: #ffffff;
+  --texto: #2b2420;
+  --suave: #7a6f68;
+  --borda: #e9e1d8;
+  --ok: #2e7d4f;
+  --raio: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  padding-bottom: 90px;
+}
+
+[hidden] { display: none !important; }
+
+.topo {
+  background: var(--cor);
+  color: #fff;
+  padding: 22px 16px 18px;
+  text-align: center;
+}
+.topo h1 { margin: 0; font-size: 1.5rem; }
+.topo p { margin: 4px 0 0; opacity: .85; font-size: .9rem; }
+
+/* Categorias */
+.categorias {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 12px;
+  background: var(--fundo);
+  border-bottom: 1px solid var(--borda);
+  scrollbar-width: none;
+}
+.categorias::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto;
+  border: 1px solid var(--borda);
+  background: #fff;
+  color: var(--texto);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.chip.ativo { background: var(--cor); border-color: var(--cor); color: #fff; }
+
+main { max-width: 720px; margin: 0 auto; padding: 12px; }
+
+.aviso {
+  background: #fff4d6;
+  border: 1px solid #f0d78c;
+  color: #6b5200;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: .85rem;
+  margin-bottom: 12px;
+}
+
+.carregando, .vazio { text-align: center; color: var(--suave); padding: 40px 0; }
+
+.categoria-titulo { margin: 18px 4px 8px; font-size: 1.1rem; }
+
+.lista { display: flex; flex-direction: column; gap: 10px; }
+
+.produto {
+  display: flex;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 10px;
+}
+.produto img, .produto .sem-foto {
+  width: 88px;
+  height: 88px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  background: #f0e8df;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+}
+.produto-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.produto-info h3 { margin: 0 0 2px; font-size: 1rem; }
+.produto-info p {
+  margin: 0;
+  color: var(--suave);
+  font-size: .85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.produto-rodape {
+  margin-top: auto;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preco { font-weight: 700; color: var(--cor-escura); }
+
+.btn-add {
+  background: var(--cor);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-add:active { background: var(--cor-escura); }
+
+/* Seletor de quantidade */
+.qtd {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.qtd button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--cor);
+}
+.qtd span { min-width: 28px; text-align: center; font-weight: 600; }
+
+/* Barra do carrinho */
+.barra-carrinho {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  max-width: 696px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background: var(--cor);
+  color: #fff;
+  border: 0;
+  border-radius: var(--raio);
+  padding: 16px;
+  font-size: 1rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* Painel */
+.painel { position: fixed; inset: 0; z-index: 30; }
+.painel-fundo { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+.painel-conteudo {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  max-width: 720px;
+  margin: 0 auto;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 16px;
+  animation: sobe .2s ease-out;
+}
+@keyframes sobe { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.painel-topo { display: flex; justify-content: space-between; align-items: center; }
+.painel-topo h2 { margin: 0; font-size: 1.2rem; }
+.icone { background: none; border: 0; font-size: 1.3rem; cursor: pointer; padding: 6px; }
+
+.itens-carrinho { list-style: none; margin: 12px 0; padding: 0; }
+.item-carrinho { padding: 12px 0; border-bottom: 1px solid var(--borda); }
+.item-linha { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.item-nome { font-weight: 600; }
+.item-sub { color: var(--suave); font-size: .85rem; }
+.item-obs {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  font: inherit;
+  font-size: .85rem;
+}
+
+.campo { display: block; margin-top: 12px; font-size: .85rem; color: var(--suave); }
+.campo input, .campo textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--texto);
+}
+
+.total-linha {
+  display: flex;
+  justify-content: space-between;
+  margin: 18px 0 12px;
+  font-size: 1.15rem;
+}
+
+.btn-primario {
+  width: 100%;
+  background: var(--ok);
+  color: #fff;
+  border: 0;
+  border-radius: var(--raio);
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-primario:disabled { opacity: .6; cursor: wait; }
+.btn-link {
+  display: block;
+  margin: 10px auto 0;
+  background: none;
+  border: 0;
+  color: var(--suave);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%);
+  background: #2b2420;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: .9rem;
+  z-index: 50;
+  max-width: 90%;
+  text-align: center;
+}
+.toast.erro { background: #b3261e; }
+.toast.sucesso { background: var(--ok); }
+
+@media (min-width: 720px) {
+  .lista { gap: 12px; }
+  .produto img, .produto .sem-foto { width: 110px; height: 110px; }
+  }

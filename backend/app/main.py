@@ -7,7 +7,6 @@ from models import models
 from routes.categories import categories_router
 from routes.orders import orders_router
 from routes.products import products_router
-from routes.tables import tables_router
 
 app = FastAPI()
 app.add_middleware(
@@ -27,4 +26,3 @@ Base.metadata.create_all(bind=engine)
 app.include_router(categories_router)
 app.include_router(orders_router)
 app.include_router(products_router)
-app.include_router(tables_router)

@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException
 
 from db.database import SessionLocal
-from models.models import Product, Category, ProductCategory
+from models.models import Product, Category, ProductCategory, OrderItem
 from schemas.schemas import ProductCreate
 
 
@@ -73,3 +73,36 @@ async def get_product(product_id: int):
         )
 
     return product
+
+@products_router.delete("/{product_id}")
+async def delete_product(product_id: int):
+    session = SessionLocal()
+
+    product = session.query(Product).filter(
+        Product.id == product_id
+    ).first()
+
+    if not product:
+        raise HTTPException(
+            status_code=404,
+            detail="Produto não encontrado"
+        )
+
+    order_item = session.query(OrderItem).filter(
+        OrderItem.product_id == product_id
+    ).first()
+
+    if order_item:
+        raise HTTPException(
+            status_code=409,
+            detail="Produto não pode ser apagado porque está vinculado a um pedido"
+        )
+
+    session.query(ProductCategory).filter(
+        ProductCategory.product_id == product_id
+    ).delete()
+
+    session.delete(product)
+    session.commit()
+
+    return {"message": "Produto apagado com sucesso!"}

@@ -14,13 +14,20 @@ orders_router = APIRouter(
 )
 
 # Lista todos os pedido
-@orders_router.get('/')
+@orders_router.get("/")
 async def list_orders():
-    session = SessionLocal()
+    with SessionLocal() as session:
+        orders = session.query(Order).all()
 
-    orders = session.query(Order).all()
+        response = [
+            {
+                "id": order.id,
+                "items": order.items
+            }
+            for order in orders
+        ]
 
-    return jsonable_encoder(orders)
+        return jsonable_encoder(response)
 
 # Lista os pedidos por ID
 @orders_router.get('/{order_id}')

@@ -1,8 +1,8 @@
 const CONFIG = {
-  API_URL: "http://localhost:8000",   // URL do backend FastAPI
-  ROTA_PRODUTOS: "/produtos",         // GET  -> lista de produtos
-  ROTA_PEDIDOS: "/pedidos",           // POST -> cria pedido
-  USAR_MOCK_SE_FALHAR: true,          // se a API estiver fora, usa dados de exemplo
+  API_URL: "http://127.0.0.1:8000",
+  ROTA_PRODUTOS: "/products/",
+  ROTA_PEDIDOS: "/orders/",
+  USAR_MOCK_SE_FALHAR: false,
 };
 
 /* Dados de exemplo (usados só se a API não responder) */
@@ -15,6 +15,16 @@ const PRODUTOS_MOCK = [
   { id: 6, nome: "Suco Natural", descricao: "Laranja, limão ou maracujá 400ml.", preco: 9.0, categoria: "Bebidas" },
   { id: 7, nome: "Brownie", descricao: "Brownie de chocolate com sorvete.", preco: 14.0, categoria: "Sobremesas" },
 ];
+
+async function carregarProdutos() {
+  console.log("MOCK CARREGADO", PRODUTOS_MOCK);
+
+  produtos = PRODUTOS_MOCK.map(normalizarProduto);
+
+  renderizarCategorias();
+  renderizarLista();
+  atualizarCarrinho();
+}
 
 /* ---------- Estado ---------- */
 let produtos = [];
@@ -114,18 +124,15 @@ async function carregarProdutos() {
 
 async function enviarPedido() {
   const itens = Object.entries(carrinho).map(([id, i]) => ({
-    produto_id: Number(id),
-    quantidade: i.quantidade,
-    observacao: i.observacao || "",
-  }));
+    product_id: Number(id),
+    quantity: i.quantidade,
+    notes: i.observacao || null,
+}));
   if (!itens.length) return;
 
-  // Ajuste este payload ao schema (Pydantic) do seu backend
   const payload = {
-    cliente: el.cliente.value.trim() || null,
-    observacao: el.obsGeral.value.trim() || null,
-    itens,
-  };
+  items: itens,
+};
 
   el.btnEnviar.disabled = true;
   el.btnEnviar.textContent = "Enviando...";

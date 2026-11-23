@@ -51,12 +51,33 @@ async def create_product(product: ProductCreate):
 
 @products_router.get("/")
 async def list_products():
-    session = SessionLocal()
+    with SessionLocal() as session:
+        products = session.query(Product).all()
 
-    products = session.query(Product).all()
+        result = []
 
-    return products
+        for product in products:
+            association = session.query(ProductCategory).filter(
+                ProductCategory.product_id == product.id
+            ).first()
 
+            category = None
+
+            if association:
+                category = session.query(Category).filter(
+                    Category.id == association.category_id
+                ).first()
+
+            result.append({
+                "id": product.id,
+                "name": product.name,
+                "description": product.description,
+                "price": product.price,
+                "image_url": product.image_url,
+                "category": category.name if category else "Outros"
+            })
+
+        return result
 
 @products_router.get("/{product_id}")
 async def get_product(product_id: int):

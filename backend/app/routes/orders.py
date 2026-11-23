@@ -22,6 +22,8 @@ async def list_orders():
         response = [
             {
                 "id": order.id,
+                "customer_name": order.customer_name,
+                "general_notes": order.general_notes,
                 "items": order.items
             }
             for order in orders
@@ -55,7 +57,10 @@ async def list_order_by_id(order_id: int):
 async def create_order(order_data: OrderCreate):
     session = SessionLocal()
 
-    new_order = Order()
+    new_order = Order(
+    customer_name=order_data.customer_name,
+    general_notes=order_data.general_notes
+)
 
     session.add(new_order)
     session.flush()

@@ -131,7 +131,9 @@ async function enviarPedido() {
   if (!itens.length) return;
 
   const payload = {
-  items: itens,
+    customer_name: el.cliente.value.trim() || null,
+    general_notes: el.obsGeral.value.trim() || null,
+    items: itens,
 };
 
   el.btnEnviar.disabled = true;

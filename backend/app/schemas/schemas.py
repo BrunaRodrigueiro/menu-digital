@@ -11,6 +11,8 @@ class OrderItemCreate(BaseModel):
 
 # Schema para CRIAR pedido
 class OrderCreate(BaseModel):
+    customer_name: Optional[str] = None
+    general_notes: Optional[str] = None
     items: list[OrderItemCreate]
 
 # Schema OrderItem
